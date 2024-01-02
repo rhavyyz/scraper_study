@@ -7,7 +7,7 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-from keys import SCRAPEOPS_API_KEY
+from values import SCRAPEOPS_API_KEY, PROXY_SERVER_URL, PROXY_PASSWORD, PROXY_PORT, PROXY_USERNAME
 
 BOT_NAME = "study_scrapy"
 
@@ -54,8 +54,9 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    "study_scrapy.middlewares.FakeUserAgentMiddleware": 543,
-   'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-   'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+   "study_scrapy.middlewares.ProxyServerMiddleware": 5430,
+   # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+   # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
 }
 
 # Enable or disable extensions

@@ -132,3 +132,24 @@ class FakeUserAgentMiddleware:
     
     def process_request(self, request, spider):
         request.headers = Headers(self.__random_header())
+
+import base64
+
+class ProxyServerMiddleware:
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(crawler.settings)
+    
+    def __init__(self, settings) -> None:
+        self.url = settings.get('PROXY_SERVER_URL')
+        self.user = settings.get('PROXY_USERNAME')
+        self.password = settings.get('PROXY_PASSWORD')
+        self.port = settings.get('PROXY_PORT')
+
+    def process_request(self, request, spider):
+        credentials = f'{self.user}:{self.password}'
+        basic_authentication = 'Basic ' + base64.b64encode(credentials.encode()).decode()
+        host = f'https://{self.url}:{self.port}'
+
+        request.meta['proxy'] = host
+        request.headers['Proxy-Authorization'] = basic_authentication
