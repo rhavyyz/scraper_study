@@ -6,7 +6,19 @@
 import scrapy
 
 
-class StudyScrapyItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+'''
+    This serializer thing is usefull to small amount of data
+    in case you dont want to write a lot of code and need fast development 
+'''
+def uppercase(value : str) -> str:
+    return value.upper()
+
+class BookItem(scrapy.Item):
+    title = scrapy.Field() #(serializer = uppercase)
+    description = scrapy.Field()
+    price = scrapy.Field()
+    in_stock = scrapy.Field()
+    book_url = scrapy.Field()
+    stars = scrapy.Field()
+    category = scrapy.Field()
+      
