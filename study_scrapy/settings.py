@@ -54,6 +54,8 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    "study_scrapy.middlewares.FakeUserAgentMiddleware": 543,
+   'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+   'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
 }
 
 # Enable or disable extensions
@@ -96,3 +98,12 @@ FEED_EXPORT_ENCODING = "utf-8"
 
 SCRAPEOPS_API_URL = 'https://headers.scrapeops.io/v1/browser-headers'
 SCRAPEOPS_RESULT_NUMBNER = 50
+
+
+
+ROTATING_PROXY_LIST = [
+    '38.127.172.198:11537',
+    '104.25.251.18:13335',
+    '47.112.158.63:37963',
+    '192.210.148.89:80'
+]
