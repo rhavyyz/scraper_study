@@ -7,6 +7,8 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+from keys import SCRAPEOPS_API_KEY
+
 BOT_NAME = "study_scrapy"
 
 SPIDER_MODULES = ["study_scrapy.spiders"]
@@ -50,9 +52,9 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    "study_scrapy.middlewares.StudyScrapyDownloaderMiddleware": 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   "study_scrapy.middlewares.FakeUserAgentMiddleware": 543,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -91,3 +93,6 @@ ITEM_PIPELINES = {
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+SCRAPEOPS_API_URL = 'https://headers.scrapeops.io/v1/browser-headers'
+SCRAPEOPS_RESULT_NUMBNER = 50

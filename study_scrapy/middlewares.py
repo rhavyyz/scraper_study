@@ -101,3 +101,34 @@ class StudyScrapyDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info("Spider opened: %s" % spider.name)
+
+from urllib.parse import urlencode
+from random import randint
+import requests
+from scrapy.http import Headers
+
+
+class FakeUserAgentMiddleware:
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(crawler.settings)
+    
+    def __request_headers(self):
+        headers = {'api_key' : self.key, 'num_results' : self.result_number}
+        response = requests.get(self.url, params=urlencode(headers))
+        self.headers = response.json().get('result', [])
+
+
+    def __init__(self, settings) -> None:
+        self.key = settings.get('SCRAPEOPS_API_KEY')
+        self.url = settings.get('SCRAPEOPS_API_URL')
+        self.result_number = settings.get('SCRAPEOPS_RESULT_NUMBER')
+        self.headers = []
+
+        self.__request_headers()
+
+    def __random_header(self):
+        return self.headers[randint(0, len(self.headers)-1)]
+    
+    def process_request(self, request, spider):
+        request.headers = Headers(self.__random_header())
