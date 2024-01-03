@@ -3,6 +3,8 @@ import scrapy
 from scrapy.http import Request
 from study_scrapy.items import BookItem 
 
+from urllib.parse import urlencode 
+
 class BookspiderSpider(scrapy.Spider):
     # The name we reference 
     name = "bookspider"
@@ -12,8 +14,8 @@ class BookspiderSpider(scrapy.Spider):
       and setting the domains you want this to be permited prevents
       your spider to crawl out of the webpages you want
     '''
-    allowed_domains = ["books.toscrape.com"]
-    start_urls = ["https://books.toscrape.com/"]
+    allowed_domains = ["books.toscrape.com", "proxy.scrapeops.io"]
+    __start_urls = ["https://books.toscrape.com/"]
 
 
     '''
@@ -30,8 +32,8 @@ class BookspiderSpider(scrapy.Spider):
     }
 
     def start_requests(self) -> Iterable[Request]:
-      for url in self.start_urls:
-        yield scrapy.Request(url, self.parse)
+      for url in self.__start_urls:
+        yield scrapy.Request( url, self.parse)
 
     def parse_book_page(self, response):
 
@@ -57,7 +59,7 @@ class BookspiderSpider(scrapy.Spider):
         if 'catalogue/' not in next_page:
           next_page = "catalogue/" + next_page
 
-        next_page = self.start_urls[0] + next_page
+        next_page = self.__start_urls[0] + next_page
  
         yield response.follow(next_page, self.parse_book_page)
 
@@ -69,5 +71,5 @@ class BookspiderSpider(scrapy.Spider):
       if 'catalogue/' not in next_page:
         next_page = "catalogue/" + next_page
 
-      next_page = self.start_urls[0] + next_page
+      next_page = self.__start_urls[0] + next_page
       yield response.follow(next_page, self.parse)

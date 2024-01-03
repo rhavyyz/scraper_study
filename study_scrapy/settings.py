@@ -14,6 +14,8 @@ BOT_NAME = "study_scrapy"
 SPIDER_MODULES = ["study_scrapy.spiders"]
 NEWSPIDER_MODULE = "study_scrapy.spiders"
 
+DUPEFILTER_CLASS = 'scrapy.dupefilters.BaseDupeFilter'
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "study_scrapy (+http://www.yourdomain.com)"
@@ -53,17 +55,21 @@ ROBOTSTXT_OBEY = True
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   "study_scrapy.middlewares.FakeUserAgentMiddleware": 543,
-   "study_scrapy.middlewares.ProxyServerMiddleware": 5430,
+   # "study_scrapy.middlewares.FakeUserAgentMiddleware": 543,
+   # "study_scrapy.middlewares.ProxyServerMiddleware": 5430,
+   # "study_scrapy.middlewares.ProxyApiMiddleware": 5430,
    # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
    # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+   # 'scrapeops_scrapy_proxy_sdk.scrapeops_scrapy_proxy_sdk.ScrapeOpsScrapyProxySdk' : 300
 }
+
+SCRAPEOPS_PROXY_ENABLED = True
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
-#EXTENSIONS = {
+# EXTENSIONS = {
 #    "scrapy.extensions.telnet.TelnetConsole": None,
-#}
+# }
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
@@ -100,11 +106,4 @@ FEED_EXPORT_ENCODING = "utf-8"
 SCRAPEOPS_API_URL = 'https://headers.scrapeops.io/v1/browser-headers'
 SCRAPEOPS_RESULT_NUMBNER = 50
 
-
-
-ROTATING_PROXY_LIST = [
-    '38.127.172.198:11537',
-    '104.25.251.18:13335',
-    '47.112.158.63:37963',
-    '192.210.148.89:80'
-]
+SCRAPEOPS_PROXY_API_URL = 'https://proxy.scrapeops.io/v1/'

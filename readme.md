@@ -1,0 +1,1 @@
+### Just a simple project to study webcraping with scrapy
